@@ -39,6 +39,30 @@ def search_student():
     except FileNotFoundError:
         print("No student records found.")
 
+def delete_student():
+    roll_to_delete = input("Enter Roll No to delete: ")
+    lines = []
+    found = False
+    try:
+        with open("students.txt", "r") as file:
+            lines = file.readlines()
+        
+        with open("students.txt", "w") as file:
+            for line in lines:
+                roll, name, course = line.strip().split(",")
+                if roll != roll_to_delete:
+                    file.write(line)
+                else:
+                    found = True
+        
+        if found:
+            print("Student with Roll No", roll_to_delete, "deleted successfully.")
+        else:
+            print("Student with Roll No", roll_to_delete, "not found.")
+    except FileNotFoundError:
+        print("No student records found.")
+
+
 while True:
     print("\nMenu:")
     print("1. Add Student")
@@ -57,6 +81,9 @@ while True:
 
     elif choice == "3":
         search_student()
+    
+    elif choice == "4":
+        delete_student()
 
     elif choice == "5":
         print("Thank you! Program exited.")
